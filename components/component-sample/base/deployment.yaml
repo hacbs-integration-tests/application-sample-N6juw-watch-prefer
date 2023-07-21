@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/created-by: application-service
+    app.kubernetes.io/instance: component-sample
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: component-sample
+    app.kubernetes.io/part-of: application-sample
+  name: component-sample
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: jvm-build-test-project
+      app.kubernetes.io/instance: component-sample
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: jvm-build-test-project
+        app.kubernetes.io/instance: component-sample
+    spec:
+      containers:
+      - image: quay.io/redhat-appstudio/sample-image@sha256:8bdb0a1af9b780b6fb9b3b705fc5f3a18ac5c3b87affd1a1bf17ba922d1499b5
+        name: jvm-build-test-project
+        ports:
+        - containerPort: 8081
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+status: {}
